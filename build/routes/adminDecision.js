@@ -16,26 +16,20 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-const User_1 = __importDefault(require("../models/User"));
 const Anime_1 = __importDefault(require("../models/Anime"));
-router.post('/create', jsonParser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const usertoken = req.headers.authorization;
-    if (!usertoken) {
-        return res.status(401).send("not logined");
+router.post('/admin/decision/:name', jsonParser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const anime = yield Anime_1.default.findOne({ name: req.params.name });
+    if (!anime) {
+        return res.status(404).send('Anime not found');
     }
-    const userfind = yield User_1.default.findOne({ token: usertoken });
-    if (!userfind) {
-        return res.status(401).send("not valid user token");
+    if (req.body.decision === 'accept') {
+        anime.proposalStatus = 'accepted';
     }
-    const animeCreate = new Anime_1.default({
-        name: req.body.name,
-        description: req.body.description,
-        coverImage: req.body.coverImage,
-        characters: req.body.characters,
-        createdBy: userfind.name,
-        proposalStatus: 'queued',
-    });
-    const proposedAnime = yield Anime_1.default.create(animeCreate);
-    return res.status(200).json(proposedAnime);
+    else if (req.body.decision === 'reject') {
+        anime.proposalStatus = 'rejected';
+    }
+    // Save the changes
+    yield anime.save();
+    return res.status(200).json(anime.proposalStatus);
 }));
 exports.default = router;

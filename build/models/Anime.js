@@ -40,6 +40,11 @@ const animeSchema = new mongoose_1.Schema({
             user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' },
             comment: { type: String, required: true },
         }],
+    proposalStatus: { type: String, enum: ['queued', 'accepted', 'rejected'], default: 'queued' },
+    editor: {
+        user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' },
+        username: { type: String },
+    },
 });
 const Anime = (0, mongoose_1.model)('Anime', animeSchema);
 exports.default = Anime;
