@@ -9,6 +9,12 @@ interface AnimeRating {
     user: mongoose.Types.ObjectId;
     rating: number;
 }
+
+interface AnimeEpisode {
+    number: string;
+    title: string;
+}
+
 interface Anime {
     name: string;
     description: string;
@@ -21,6 +27,7 @@ interface Anime {
     comments: AnimeComment[];
     proposalStatus: 'queued' | 'accepted' | 'rejected';
     editor: string;
+    episodes: AnimeEpisode[];
 }
 
 const animeSchema = new Schema<Anime>({
@@ -40,7 +47,11 @@ const animeSchema = new Schema<Anime>({
         comment: { type: String, required: true },
       }],
     proposalStatus: { type: String, enum: ['queued', 'accepted', 'rejected'], default: 'queued' },
-    editor: { type: String }
+    editor: { type: String },
+    episodes: [{
+        number: { type: String },
+        title: { type: String },
+    }],
 });
 
 const Anime = model<Anime>('Anime', animeSchema);
