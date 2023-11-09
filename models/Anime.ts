@@ -1,19 +1,32 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model, mongo } from "mongoose";
 
+interface AnimeRating {
+    user: mongoose.Types.ObjectId;
+    rating: number;
+}
 interface Anime {
     name: string;
     description: string;
     coverImage: string;
     characters: [string];
     createdBy: string;
+    ratings: AnimeRating[];
+    averageRating: number;
+    numberOfRatings: number;
 }
 
 const animeSchema = new Schema<Anime>({
     name: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String, required: false },
     coverImage: { type: String, required: true },
-    characters: [{ type: String, required: true }],
-    createdBy: { type:String, required: true }
+    ratings: [{
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        rating: { type: Number, min: 1, max: 10, default: 0 },
+      }],
+    characters: [{ type: String, required: false }],
+    createdBy: { type:String, required: false },
+    averageRating: { type: Number, default: 0 },
+    numberOfRatings: { type: Number, default: 0 },
 });
 
 const Anime = model<Anime>('Anime', animeSchema);
