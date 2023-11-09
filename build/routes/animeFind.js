@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = require('express');
 const router = express.Router();
 const Anime_1 = __importDefault(require("../models/Anime"));
-router.get('/animes/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/anime/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const animeId = req.params.id;
     const foundAnime = yield Anime_1.default.findOne({ name: animeId });
     if (!foundAnime) {
