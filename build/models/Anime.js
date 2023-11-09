@@ -36,6 +36,10 @@ const animeSchema = new mongoose_1.Schema({
     createdBy: { type: String, required: false },
     averageRating: { type: Number, default: 0 },
     numberOfRatings: { type: Number, default: 0 },
+    comments: [{
+            user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User' },
+            comment: { type: String, required: true },
+        }],
 });
 const Anime = (0, mongoose_1.model)('Anime', animeSchema);
 exports.default = Anime;
