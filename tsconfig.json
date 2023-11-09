@@ -1,9 +1,12 @@
 {
     "extends": "@tsconfig/node20/tsconfig.json",
     "compilerOptions": {
-        "outDir": "build", 
-        "rootDir": "./", 
+      "target": "es6",
+      "outDir": "./build",
+      "rootDir": "./",
+      "strict": true
     },
-    "include": ["*.ts"],
+    "include": ["**/*.ts"],
     "exclude": ["node_modules"]
-}
+  }
+  
