@@ -18,7 +18,7 @@ const bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 const User_1 = __importDefault(require("../models/User"));
 const Anime_1 = __importDefault(require("../models/Anime"));
-router.post('/admin/create', jsonParser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/create', jsonParser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const usertoken = req.headers.authorization;
     if (!usertoken) {
         return res.status(401).send("not logined");
