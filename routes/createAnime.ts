@@ -22,10 +22,13 @@ router.post('/create', jsonParser, async (req:any, res:any) => {
         description: req.body.description,
         coverImage: req.body.coverImage,
         characters: req.body.characters,
-        createdBy: userfind.name
+        createdBy: userfind.name,
+        proposalStatus: 'queued',
     });
-    animeCreate.save();
-    return res.status(200).json(animeCreate);
+    
+    const proposedAnime = await Anime.create(animeCreate);
+
+    return res.status(200).json(proposedAnime);
 });
 
 export default router;

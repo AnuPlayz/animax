@@ -19,6 +19,8 @@ interface Anime {
     averageRating: number;
     numberOfRatings: number;
     comments: AnimeComment[];
+    proposalStatus: 'queued' | 'accepted' | 'rejected';
+    editor: string;
 }
 
 const animeSchema = new Schema<Anime>({
@@ -37,6 +39,8 @@ const animeSchema = new Schema<Anime>({
         user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
         comment: { type: String, required: true },
       }],
+    proposalStatus: { type: String, enum: ['queued', 'accepted', 'rejected'], default: 'queued' },
+    editor: { type: String }
 });
 
 const Anime = model<Anime>('Anime', animeSchema);

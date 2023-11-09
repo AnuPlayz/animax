@@ -32,13 +32,11 @@ router.post('/anime/update/:name', jsonParser, (req, res) => __awaiter(void 0, v
     if (!foundAnime) {
         return res.status(404).send('Anime not found');
     }
-    if (foundAnime.createdBy !== userfind.name) {
-        return res.status(403).send('You do not have permission to update this anime');
-    }
     foundAnime.name = req.body.name || foundAnime.name;
     foundAnime.description = req.body.description || foundAnime.description;
     foundAnime.coverImage = req.body.coverImage || foundAnime.coverImage;
     foundAnime.characters = req.body.characters || foundAnime.characters;
+    foundAnime.editor = userfind.name;
     yield foundAnime.save();
     return res.status(200).json(foundAnime);
 }));

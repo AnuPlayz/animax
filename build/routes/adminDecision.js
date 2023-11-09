@@ -28,8 +28,9 @@ router.post('/admin/decision/:name', jsonParser, (req, res) => __awaiter(void 0,
     else if (req.body.decision === 'reject') {
         anime.proposalStatus = 'rejected';
     }
-    // Save the changes
-    yield anime.save();
+    if (anime.proposalStatus == 'accepted') {
+        yield anime.save();
+    }
     return res.status(200).json(anime.proposalStatus);
 }));
 exports.default = router;
